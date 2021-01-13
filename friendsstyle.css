@@ -1,0 +1,21 @@
+body{
+    font-family: century gothic;
+}
+table {
+  margin-left: 50%;
+  transform: translate(-50%);
+  font-size: 20px;
+  text-align: center;
+}
+.th_td {
+  padding: 10px 25px;
+}
+.friendsImgStyle {
+  width: 30%;
+  margin-left: 50%;
+  transform: translate(-50%);
+  margin-top: 20px;
+}
+.friendsImgStyle:hover {
+  width: 33%;
+}

@@ -1,4 +1,5 @@
 import React from "react"
+//create component using class
 class Fun extends React.Component {
     render() {
         return (<div>
@@ -10,5 +11,12 @@ class Fun extends React.Component {
         </div>);
     }
 }
+
+//create component using stateless function
+// const Fun=()=>{
+//     return <div>
+//         <h1>hi</h1>
+//     </div>
+// }
 
 export default Fun

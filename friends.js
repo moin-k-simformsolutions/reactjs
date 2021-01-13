@@ -1,26 +1,23 @@
 import React from 'react';
+import "./friendsstyle.css"
+import friendsimage from "./images/friends.jpg"
+
 class Friends extends React.Component {
     render() {
 
         return (<div>
-            <h1 style={{ textAlign: "center" }}>f.r.i.e.n.d.s</h1>
-            <table border="1" style={{ marginLeft: "50%", transform: "translate(-50%)", fontSize: "20px", textAlign: "center" }}>
+            <h1 style={{ textAlign: "center"}}>f.r.i.e.n.d.s</h1>
+            <table border="1">
                 <tr>
-                    <th>name</th>
-                    <th>gender</th>
-                    <th>age</th>
+                    <th className="th_td">Name</th>
+                    <th className="th_td">Gender</th>
+                    <th className="th_td">Age</th>
                 </tr>
-                {/* <tr>
-                    <td>{details[0].name}</td>
-                    <td>{details[0].gender}</td>
-                    <td>{details[0].age}</td>
-                </tr> */}
                 {this.getDetails()}
-
             </table>
+            <img src={friendsimage} alt="friends" className="friendsImgStyle"></img>
         </div>);
     }
-
     getDetails() {
         var details = [
             {
@@ -59,7 +56,7 @@ class Friends extends React.Component {
         var output = [];
         for (var i = 0; i < details.length; i++) {
             output.push(<tr>
-                <td>{details[i].name}</td>
+                <td className="th_td">{details[i].name}</td>
                 <td>{details[i].gender}</td>
                 <td>{details[i].age}</td>
             </tr>);
