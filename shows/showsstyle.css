@@ -1,0 +1,40 @@
+.container{
+    width: 90%;
+    /* min-height: 25%; */
+    background-color: red;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: 20px;
+    background-color: #ff843d;
+    color: #fff8f4;
+    border-radius: 10px;
+}
+
+.container:hover{
+    width: 92%;
+}
+
+.image{
+    display: inline-block;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.detailsContainer{
+    display:inline-block;
+    vertical-align: top;
+    max-width: 85%;
+    padding-right: 10px;
+}
+.heading{
+    margin-top: 50px;
+    margin-left: 20px;
+    font-size: 25px;
+    font-family: impact;
+}
+
+.details{
+    margin-left: 50px;
+    font-size: 18px;
+    text-align: justify;
+    font-family: century gothic;
+}
