@@ -31,7 +31,10 @@ const Signup = () => {
 
     return (
         <div id="container">
-            <form onSubmit={createUser}>
+            <form onSubmit={e=>{
+                e.preventDefault();
+                createUser();
+            } }>
                 <label htmlFor="username" className="labels">username<br/>
                     {/* ============================================================\/\/\/set value of state\/\/\/ */}
                     <input name="username" type="text" className="inputs" onChange={(e)=>setUsername(e.target.value)}></input>
