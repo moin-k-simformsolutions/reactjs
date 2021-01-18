@@ -5,6 +5,7 @@ import Frineds from "./friends.js"
 import Counter from "./counter"
 import AllShows from "./shows/allShows"
 import SelectShow from "./shows/SelectShow"
+import Signup from "./forms/Signup"
 // ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
 // ReactDOM.render(<Fun name="mk"/>, document.getElementById('root'));
 // ReactDOM.render(<Frineds/>, document.getElementById('root'));
@@ -31,12 +32,16 @@ const routing = (
                 <li>
                     <Link to="/shows/SelectShow">select shows (hooks,event listeners)</Link>
                 </li>
+                <li>
+                    <Link to="/forms/Signup">signup (forms,event listeners)</Link>
+                </li>
 
             </ul>
             <Route exact path="/Friends" component={Frineds} />
             <Route exact path="/Counter" component={Counter} />
             <Route path="/shows/allShows" component={AllShows} />
             <Route path="/shows/SelectShow" component={SelectShow} />
+            <Route path="/forms/Signup" component={Signup} />
 
         </div>
     </Router>
