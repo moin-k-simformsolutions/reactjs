@@ -1,0 +1,19 @@
+.reduxappcontainer{
+  margin-left: 50%;
+  text-align: center;
+  transform: translate(-50%);
+  margin-top: 10%;
+}
+
+p {
+  font-size: 40px;
+  color: #ff843d;
+}
+
+button {
+  font-size: 20px;
+  border: none;
+  font-family: impact;
+  padding: 10px;
+  min-width: 100px;
+}
