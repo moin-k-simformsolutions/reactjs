@@ -6,6 +6,11 @@ import Counter from "./counter"
 import AllShows from "./shows/allShows"
 import SelectShow from "./shows/SelectShow"
 import Signup from "./forms/Signup"
+import CountContainer from './reduxPractice/CountCotainer'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reduxPractice/countReducer'
+
 // ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
 // ReactDOM.render(<Fun name="mk"/>, document.getElementById('root'));
 // ReactDOM.render(<Frineds/>, document.getElementById('root'));
@@ -35,16 +40,27 @@ const routing = (
                 <li>
                     <Link to="/forms/Signup">signup (forms,event listeners)</Link>
                 </li>
-
             </ul>
-            <Route exact path="/Friends" component={Frineds} />
-            <Route exact path="/Counter" component={Counter} />
-            <Route path="/shows/allShows" component={AllShows} />
-            <Route path="/shows/SelectShow" component={SelectShow} />
-            <Route path="/forms/Signup" component={Signup} />
-
+            <switch>
+                <Route exact path="/Friends" component={Frineds} />
+                <Route exact path="/Counter" component={Counter} />
+                <Route path="/shows/allShows" component={AllShows} />
+                <Route path="/shows/SelectShow" component={SelectShow} />
+                <Route path="/forms/Signup" component={Signup} />
+            </switch>
         </div>
     </Router>
 )
+// ReactDOM.render(routing, document.getElementById('root'));
 
-ReactDOM.render(routing, document.getElementById('root'));
+
+//=====================================REDUX=============================
+
+//store
+const store = createStore(reducer);
+
+ReactDOM.render(
+    <Provider store={store}>
+        <CountContainer />
+    </Provider>
+    , document.getElementById('root'));
