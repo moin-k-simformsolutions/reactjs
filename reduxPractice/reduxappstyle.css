@@ -10,7 +10,7 @@
   color: #ff843d;
 }
 
-button {
+.incrementButton,.decrementButton,.resetButton {
   font-size: 20px;
   border: none;
   font-family: impact;

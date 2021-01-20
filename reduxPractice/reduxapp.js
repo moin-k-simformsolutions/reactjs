@@ -12,11 +12,11 @@ class Reduxapp extends React.Component {
         return (
             <div className="reduxappcontainer">
                 <p className="number">{count}</p>
-                <button onClick={()=>increment(this.state.jumpBy)}>increse</button><br /><br />
-                <button onClick={()=>decrement(this.state.jumpBy)}>decrese</button><br /><br />
-                <button onClick={count===0?()=>alert("already 0"):reset}>reset</button><br/><br/>
+                <button className="incrementButton" onClick={()=>increment(this.state.jumpBy)}>increse</button><br /><br />
+                <button className="decrementButton" onClick={()=>decrement(this.state.jumpBy)}>decrese</button><br /><br />
+                <button className="resetButton" onClick={count===0?()=>alert("already 0"):reset}>reset</button><br/><br/>
                 <p>jump by</p>
-                <select className="dropdown" onChange={e=>this.setState({jumpBy:e.target.value})}>
+                <select value={this.state.jumpBy} className="dropdown" onChange={e=>this.setState({jumpBy:e.target.value})}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
