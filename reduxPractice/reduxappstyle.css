@@ -5,7 +5,7 @@
   margin-top: 10%;
 }
 
-p {
+.number {
   font-size: 40px;
   color: #ff843d;
 }
@@ -16,4 +16,14 @@ button {
   font-family: impact;
   padding: 10px;
   min-width: 100px;
+}
+
+.dropdown{
+  font-size: 20px;
+  width: 100px;
+  text-align: center;
+  background-color: rgb(236, 236, 236);
+  border: none;
+  padding: 5px;
+  font-family: impact;
 }

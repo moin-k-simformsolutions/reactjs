@@ -2,16 +2,17 @@ import { connect } from 'react-redux';
 import Reduxapp from "./reduxapp"
 
 //action creator
-const increment = () => ({
+const increment = (value) => ({
     type: "INCREMENT",
+    payload:value
 })
-const decrement = () => ({
+const decrement = (value) => ({
     type: "DECREMENT",
+    payload:value
 })
 const reset = () => ({
     type: "RESET",
 })
-
 
 const mapStateToProps = (state) => { return state };
 // const mapDispatchToProps = (dispatch) => {

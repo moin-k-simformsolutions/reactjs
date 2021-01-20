@@ -5,12 +5,12 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     if (action.type === "INCREMENT") {
         return {
-            count: state.count + 1
+            count: state.count + Number(action.payload)
         }
     }
     if (action.type === "DECREMENT") {
         return {
-            count: state.count - 1
+            count: state.count - action.payload
         }
     }
     if (action.type === "RESET") {
