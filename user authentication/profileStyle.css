@@ -1,0 +1,35 @@
+.profileContainer {
+  background-color: #ff843d;
+  max-width: 40%;
+  margin-left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  padding: 50px 10px;
+  margin-top: 10%;
+  border-radius: 10px;
+}
+
+.profileHeading {
+  font-size: 40px;
+  font-family: impact;
+  text-align: center;
+  margin: 0px;
+  margin-bottom: 30px;
+}
+
+.userName {
+    font-size: 30px;
+    font-family: impact;
+    text-align: center;
+    margin: 0px;
+    margin-bottom: 30px;
+}
+
+.logoutButton {
+  font-size: 20px;
+  border: none;
+  font-family: impact;
+  padding: 10px;
+  min-width: 100px;
+  margin-top: 30px;
+}
