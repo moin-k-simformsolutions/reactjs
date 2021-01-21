@@ -1,4 +1,6 @@
 import React from "react"
+import HOC from './HOC'
+
 //create component using class
 class Fun extends React.Component {
     render() {
@@ -18,5 +20,5 @@ class Fun extends React.Component {
 //         <h1>hi</h1>
 //     </div>
 // }
-
+Fun=HOC(Fun);
 export default Fun

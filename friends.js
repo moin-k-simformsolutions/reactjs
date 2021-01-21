@@ -1,5 +1,6 @@
 import React from 'react';
 import "./friendsstyle.css"
+import HOC from './HOC';
 import friendsimage from "./images/friends.jpg"
 
 class Friends extends React.Component {
@@ -64,5 +65,5 @@ class Friends extends React.Component {
         return (output);
     }
 }
-
+Friends=HOC(Friends);
 export default Friends;

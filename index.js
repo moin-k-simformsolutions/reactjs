@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import Fun from './fun'
 import Frineds from "./friends.js"
 import Counter from "./counter"
 import AllShows from "./shows/allShows"
@@ -15,7 +16,7 @@ import UserAuthContailer from './user authentication/UserAuthContainer'
 import userAuthReducer from './user authentication/userAuthReducer'
 
 // ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
-// ReactDOM.render(<Fun name="mk"/>, document.getElementById('root'));
+ReactDOM.render(<Fun name="mk"/>, document.getElementById('root'));
 // ReactDOM.render(<Frineds/>, document.getElementById('root'));
 // ReactDOM.render(<Counter/>, document.getElementById('root'));
 // ReactDOM.render(<AllShows />, document.getElementById('root'));
@@ -54,7 +55,7 @@ const routing = (
         </div>
     </Router>
 )
-ReactDOM.render(routing, document.getElementById('root'));
+// ReactDOM.render(routing, document.getElementById('root'));
 
 
 //=====================================REDUX=============================
@@ -68,5 +69,5 @@ ReactDOM.render(routing, document.getElementById('root'));
 //     </Provider>
 //     , document.getElementById('root'));
     
-const userAuthStore=createStore(userAuthReducer);
-ReactDOM.render(<Provider store={userAuthStore}><UserAuthContailer/></Provider>, document.getElementById('root'));
+// const userAuthStore=createStore(userAuthReducer);
+// ReactDOM.render(<Provider store={userAuthStore}><UserAuthContailer/></Provider>, document.getElementById('root'));
