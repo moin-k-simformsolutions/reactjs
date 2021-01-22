@@ -20,5 +20,5 @@ class Fun extends React.Component {
 //         <h1>hi</h1>
 //     </div>
 // }
-Fun=HOC(Fun);
+Fun = HOC(Fun);
 export default Fun
