@@ -7,12 +7,12 @@ import ReactDOM from 'react-dom';
 // import AllShows from "./shows/allShows"
 // import SelectShow from "./shows/SelectShow"
 // import Signup from "./forms/Signup"
-import MainPage from './Context/MainPage'
+// import MainPage from './Context/MainPage'
 // import CountContainer from './reduxPractice/CountCotainer'
 // import { Provider } from 'react-redux';
 // import { createStore } from 'redux';
 // import reducer from './reduxPractice/countReducer'
-
+import TaskTracker from './task reacker/TaskTracker'
 // import UserAuthContailer from './user authentication/UserAuthContainer'
 // import userAuthReducer from './user authentication/userAuthReducer'
 
@@ -22,7 +22,7 @@ import MainPage from './Context/MainPage'
 // ReactDOM.render(<Counter/>, document.getElementById('root'));
 // ReactDOM.render(<AllShows />, document.getElementById('root'));
 // ReactDOM.render(<SelectShow />, document.getElementById('root'));
-ReactDOM.render(<MainPage/>, document.getElementById('root'));
+ReactDOM.render(<TaskTracker/>, document.getElementById('root'));
 
 
 //routing a library used to create routing in react app
