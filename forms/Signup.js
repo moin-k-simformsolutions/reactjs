@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./signupstyle.css"
 
 const Signup = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
     const [age,setAge]=useState("");
+    const userNameRef=useRef();
+    const ageRef=useRef();
+    useEffect(()=>{
+        userNameRef.current.focus();//auto focus on username fields
+        ageRef.current.value=18;//setting default age
+    },[]);
+
 
     const createUser=()=>{
         var users=["abc","xyz"];
@@ -37,13 +44,13 @@ const Signup = () => {
             } }>
                 <label htmlFor="username" className="labels">username<br/>
                     {/* ============================================================\/\/\/set value of state\/\/\/ */}
-                    <input name="username" type="text" className="inputs" onChange={(e)=>setUsername(e.target.value)}></input>
+                    <input ref={userNameRef} name="username" type="text" className="inputs" onChange={(e)=>setUsername(e.target.value)}></input>
                 </label><br/>
                 <label htmlFor="password" className="labels">password<br/>
                     <input name="password" type="password" className="inputs" onChange={(e)=>setPassword(e.target.value)}></input>
                 </label><br/>
                 <label htmlFor="age" className="labels">age<br/>
-                    <input name="age" type="text" className="inputs"  onChange={(e)=>setAge(e.target.value)}></input>
+                    <input ref={ageRef}  name="age" type="text" className="inputs"  onChange={(e)=>setAge(e.target.value)}></input>
                 </label><br/>
                 <input type="submit" value="signup" className="SubmitButton"/>
 
