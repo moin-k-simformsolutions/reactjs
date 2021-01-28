@@ -1,13 +1,30 @@
 import React from 'react';
 import Task from './Task';
+import db from "./init-firebase";
 class TaskContainers extends React.Component {
     constructor() {
         super();
         this.state = {
-            taskTitles: ["task 1", "task 2"],
-            taskDetails: ["task details", "some task details"],
-            taskStatus: ["backlog", "inprogress"] //can be backlog ,inprogress or complete
+            taskId: [],
+            taskTitles: [],
+            taskDetails: [],
+            taskStatus: [] //can be backlog ,inprogress or complete
         }
+    }
+
+    componentDidMount() {
+        db.collection("tasks").orderBy("id").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // console.log(`${doc.id} => ${doc.data().title}`);
+                this.setState(
+                    {
+                        taskId: this.state.taskId.concat(doc.data().id),
+                        taskTitles: this.state.taskTitles.concat(doc.data().title),
+                        taskDetails: this.state.taskDetails.concat(doc.data().details),
+                        taskStatus: this.state.taskStatus.concat(doc.data().status)
+                    });
+            });
+        });
     }
 
     render() {
@@ -21,7 +38,7 @@ class TaskContainers extends React.Component {
                     {/* ==rendering all tasks in their particular containers== */}
                     {this.state.taskTitles.map((title, i) => (
                         this.state.taskStatus[i] === containerName.replace(/ /g, '') ? //==dispaly task in container based on its status
-                            <Task taskid={"task" + (i + 1)} title={title} details={this.state.taskDetails[i]} /> :
+                            <Task taskid={"task" + this.state.taskId[i]} title={title} details={this.state.taskDetails[i]} /> :
                             null
                     ))}
                 </div>
@@ -35,35 +52,68 @@ class TaskContainers extends React.Component {
     addTask = () => {
         var title = prompt("enter task title");
         var details = prompt("enter task details (optional)");
-        this.setState(
-            {
-                taskTitles: this.state.taskTitles.concat(title),
-                taskDetails: this.state.taskDetails.concat(details),
-                taskStatus: this.state.taskStatus.concat("backlog")
+        if(title.length===0)return;
+        var id = this.state.taskTitles.length === 0 ? 0 : this.state.taskTitles.length;
+
+        //adding data in firestore
+        db.collection("tasks").add({
+            id: id,
+            title: title,
+            details: details,
+            status: "backlog"
+        })
+            .then(function (docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            }).then(() => { //setting new data in state
+                this.setState(
+                    {
+                        taskId: this.state.taskId.concat(id),
+                        taskTitles: this.state.taskTitles.concat(title),
+                        taskDetails: this.state.taskDetails.concat(details),
+                        taskStatus: this.state.taskStatus.concat("backlog")
+                    });
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
             });
-        console.table(this.state);
+
     }
 
     //functions for drag and drop functionality
     dragOver(ev) {
         ev.preventDefault();
-
     }
 
     stopDrop(ev) {
         ev.preventDefault();
-
     }
 
     dropped(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("Text");
         ev.target.appendChild(document.getElementById(data));
-        var taskNum = Number(data.slice(4)) - 1;
-        var allstatus = this.state.taskStatus.slice();
-        allstatus[taskNum] = "inprogress";
-        // this.setState({taskStatus:allstatus});
-        // alert(allstatus);
+        var droppedAt = ev.target.id.slice(0, ev.target.id.indexOf("task"));
+        var taskId = data.slice(4);
+        var docId = "";
+        db.collection("tasks").where("id", "==", Number(taskId)).get() //fetching document id of moved task
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    docId = doc.id;
+                });
+            })
+            .then(() => {
+                db.collection("tasks").doc(docId).set({ //updateing moved task's data
+                    id: Number(taskId),
+                    title: this.state.taskTitles[taskId],
+                    details: this.state.taskDetails[taskId],
+                    status: droppedAt
+                })
+                    .then(() => console.log("updated"))
+                    .then(() => {
+                        this.setState(this.state);
+                    })
+            }
+            );
     }
 }
 
