@@ -1,9 +1,14 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Task from './Task';
 import db from "./init-firebase";
+import {Spin,message} from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
 class TaskContainers extends React.Component {
     constructor() {
         super();
+        this.spinnerRef=React.createRef();
         this.state = {
             taskId: [],
             taskTitles: [],
@@ -15,7 +20,7 @@ class TaskContainers extends React.Component {
     componentDidMount() {
         db.collection("tasks").orderBy("id").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                // console.log(`${doc.id} => ${doc.data().title}`);
+                ReactDOM.findDOMNode(this.spinnerRef.current).style.display='none';
                 this.setState(
                     {
                         taskId: this.state.taskId.concat(doc.data().id),
@@ -29,9 +34,11 @@ class TaskContainers extends React.Component {
 
     render() {
         const containerName = this.props.name;
+        const antIcon = <LoadingOutlined style={{ fontSize: "50px",color:"white" }} spin />;
         return (
             <div id={containerName.replace(/ /g, '')}>
                 <p class="blockheading">{this.props.name}</p>
+                <Spin ref={this.spinnerRef} indicator={antIcon} style={{marginTop:"60%"}}/>
                 <div id={containerName.replace(/ /g, '') + "taskscontainer"} class="taskscontainer"
                     onDrop={(e) => this.dropped(e, this.id)} onDragOver={(e) => this.dragOver(e, this.id)}
                     ondragleave="stopDrop(event, this.id);">
@@ -63,7 +70,8 @@ class TaskContainers extends React.Component {
             status: "backlog"
         })
             .then(function (docRef) {
-                console.log("Document written with ID: ", docRef.id);
+                message.success({content:"task added",style:{marginTop:"5%"}});
+                // console.log("Document written with ID: ", docRef.id);
             }).then(() => { //setting new data in state
                 this.setState(
                     {
