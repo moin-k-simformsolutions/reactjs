@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./signupstyle.css"
-
+import firebase from "firebase"
+import "./init-firebase"
 const Signup = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
@@ -12,16 +13,15 @@ const Signup = () => {
         ageRef.current.value=18;//setting default age
     },[]);
 
-
     const createUser=()=>{
         var users=["abc","xyz"];
         if(username===""||password===""||age===""){
             alert("all fields are mendatory");
             return;
         }
-        if(users.indexOf(username)!==-1){
-            alert("username aleready exist");
-        }
+        // if(users.indexOf(username)!==-1){
+        //     alert("username aleready exist");
+        // }
         else if(password.length<6){
             alert("password must be atleast 6 characters long");
         }
@@ -32,7 +32,18 @@ const Signup = () => {
             alert("user must be atleast 18 years old");
         }
         else{
-            alert("sign up successfull");
+            // alert("sign up successfull");
+            firebase.app();
+            //creating user
+            // firebase.auth().createUserWithEmailAndPassword(username,password).then(Credentials=>{
+            // alert("user created "+Credentials.user.uid)
+            // }).catch(error=>{alert("error"+error.message)});
+            
+            //logging in user
+            firebase.auth().signInWithEmailAndPassword(username,password).then(Credentials=>{
+            alert("user found "+Credentials.user.uid)
+            }).catch(error=>{alert("error"+error.message)});
+            
         }
     }
 
