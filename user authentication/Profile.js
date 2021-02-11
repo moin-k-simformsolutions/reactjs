@@ -1,6 +1,7 @@
 import React from "react";
 import './profileStyle.css'
 import {connect} from 'react-redux';
+import {login,logout} from './actions.js';
 class Profile extends React.Component{
     render(){
         const {username,logout}=this.props;
@@ -13,15 +14,6 @@ class Profile extends React.Component{
         );
     }
 }
-
-//actions
-const login=(username)=>({
-    type:"LOGIN",
-    payload:username,
-})
-const logout=()=>({
-    type:"LOGOUT",
-})
 
 const mapStateToProps=(state)=>{return state};
 

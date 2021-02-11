@@ -1,6 +1,7 @@
 import React from "react";
 import "./loginstyle.css";
 import { connect } from 'react-redux';
+import {login,logout} from './actions.js';
 
 class Login extends React.Component {
     constructor() {
@@ -25,15 +26,6 @@ class Login extends React.Component {
         );
     }
 }
-
-//actions
-const login = (username) => ({
-    type: "LOGIN",
-    payload: username,
-})
-const logout = () => ({
-    type: "LOGOUT",
-})
 
 const mapStateToProps = (state) => { return state };
 
