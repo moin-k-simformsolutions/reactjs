@@ -9,11 +9,12 @@ import ReactDOM from 'react-dom';
 // import Signup from "./forms/Signup"
 // import MainPage from './Context/MainPage'
 // import CountContainer from './reduxPractice/CountCotainer'
-// import { Provider } from 'react-redux';
-// import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 // import reducer from './reduxPractice/countReducer'
 import TaskTracker from './task reacker/TaskTracker'
-// import UserAuthContailer from './user authentication/UserAuthContainer'
+import taskReducer from './task reacker/reducer'
+// import Main from './user authentication/Main';
 // import userAuthReducer from './user authentication/userAuthReducer'
 
 // ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
@@ -22,7 +23,8 @@ import TaskTracker from './task reacker/TaskTracker'
 // ReactDOM.render(<Counter/>, document.getElementById('root'));
 // ReactDOM.render(<AllShows />, document.getElementById('root'));
 // ReactDOM.render(<SelectShow />, document.getElementById('root'));
-ReactDOM.render(<TaskTracker/>, document.getElementById('root'));
+// ReactDOM.render(<TaskTracker/>, document.getElementById('root'));
+// ReactDOM.render(<Signup/>, document.getElementById('root'));
 
 
 //routing a library used to create routing in react app
@@ -72,4 +74,7 @@ ReactDOM.render(<TaskTracker/>, document.getElementById('root'));
 //     , document.getElementById('root'));
     
 // const userAuthStore=createStore(userAuthReducer);
-// ReactDOM.render(<Provider store={userAuthStore}><UserAuthContailer/></Provider>, document.getElementById('root'));
+// ReactDOM.render(<Provider store={userAuthStore}><Main/></Provider>, document.getElementById('root'));
+
+const taskTrackerStore=createStore(taskReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+ReactDOM.render(<Provider store={taskTrackerStore}><TaskTracker/></Provider>, document.getElementById('root'));

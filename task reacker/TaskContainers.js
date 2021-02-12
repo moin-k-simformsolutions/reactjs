@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Task from './Task';
-import db from "./init-firebase";
-import {Spin,message} from "antd";
+import { Spin } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
+import { connect } from 'react-redux';
+import { addTask, taskMoved } from './actions';
 class TaskContainers extends React.Component {
-    constructor() {
-        super();
-        this.spinnerRef=React.createRef();
+    constructor(props) {
+        super(props);
+
+        this.spinnerRef = React.createRef();
         this.state = {
             taskId: [],
             taskTitles: [],
@@ -17,29 +19,37 @@ class TaskContainers extends React.Component {
         }
     }
 
-    componentDidMount() {
-        db.collection("tasks").orderBy("id").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                ReactDOM.findDOMNode(this.spinnerRef.current).style.display='none';
-                this.setState(
-                    {
-                        taskId: this.state.taskId.concat(doc.data().id),
-                        taskTitles: this.state.taskTitles.concat(doc.data().title),
-                        taskDetails: this.state.taskDetails.concat(doc.data().details),
-                        taskStatus: this.state.taskStatus.concat(doc.data().status)
-                    });
-            });
-        });
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            ReactDOM.findDOMNode(this.spinnerRef.current).style.display = 'none';
+            this.setState({});
+            this.setState({  taskId: this.props.taskIds,
+                taskTitles: this.props.taskTitles,
+                taskDetails: this.props.taskDetails,
+                taskStatus: this.props.taskStatus });
+        }
     }
+    componentDidMount() {
+        this.setState(
+            {
+                taskId: this.props.taskIds,
+                taskTitles: this.props.taskTitles,
+                taskDetails: this.props.taskDetails,
+                taskStatus: this.props.taskStatus
+            });
+
+    }
+
 
     render() {
         const containerName = this.props.name;
-        const antIcon = <LoadingOutlined style={{ fontSize: "50px",color:"white" }} spin />;
+        const antIcon = <LoadingOutlined style={{ fontSize: "50px", color: "white" }} spin />;
+
         return (
             <div id={containerName.replace(/ /g, '')}>
-                <p class="blockheading">{this.props.name}</p>
-                <Spin ref={this.spinnerRef} indicator={antIcon} style={{marginTop:"60%"}}/>
-                <div id={containerName.replace(/ /g, '') + "taskscontainer"} class="taskscontainer"
+                <p className="blockheading">{this.props.name}</p>
+                <Spin ref={this.spinnerRef} indicator={antIcon} style={{ marginTop: "60%" }} />
+                <div key={this.state.taskId} id={containerName.replace(/ /g, '') + "taskscontainer"} class="taskscontainer"
                     onDrop={(e) => this.dropped(e, this.id)} onDragOver={(e) => this.dragOver(e, this.id)}
                     ondragleave="stopDrop(event, this.id);">
                     {/* ==rendering all tasks in their particular containers== */}
@@ -51,39 +61,18 @@ class TaskContainers extends React.Component {
                 </div>
                 {/*==to display add button only for backlog container==*/}
                 {this.props.name === "backlog" ?
-                    <button id="addtask" onClick={this.addTask}>add task</button> : null}
+                    <button id="addtask" onClick={this.addTaskLocal}>add task</button> : null}
             </div>
         );
     }
 
-    addTask = () => {
+    addTaskLocal = () => {
         var title = prompt("enter task title");
         var details = prompt("enter task details (optional)");
-        if(title.length===0)return;
+        if (title.length === 0 || title === null) return;
         var id = this.state.taskTitles.length === 0 ? 0 : this.state.taskTitles.length;
-
-        //adding data in firestore
-        db.collection("tasks").add({
-            id: id,
-            title: title,
-            details: details,
-            status: "backlog"
-        })
-            .then(function (docRef) {
-                message.success({content:"task added",style:{marginTop:"5%"}});
-                // console.log("Document written with ID: ", docRef.id);
-            }).then(() => { //setting new data in state
-                this.setState(
-                    {
-                        taskId: this.state.taskId.concat(id),
-                        taskTitles: this.state.taskTitles.concat(title),
-                        taskDetails: this.state.taskDetails.concat(details),
-                        taskStatus: this.state.taskStatus.concat("backlog")
-                    });
-            })
-            .catch(function (error) {
-                console.error("Error adding document: ", error);
-            });
+        const { addTask } = this.props;
+        addTask(id, title, details, "backlog");
 
     }
 
@@ -102,27 +91,22 @@ class TaskContainers extends React.Component {
         ev.target.appendChild(document.getElementById(data));
         var droppedAt = ev.target.id.slice(0, ev.target.id.indexOf("task"));
         var taskId = data.slice(4);
-        var docId = "";
-        db.collection("tasks").where("id", "==", Number(taskId)).get() //fetching document id of moved task
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    docId = doc.id;
-                });
-            })
-            .then(() => {
-                db.collection("tasks").doc(docId).set({ //updateing moved task's data
-                    id: Number(taskId),
-                    title: this.state.taskTitles[taskId],
-                    details: this.state.taskDetails[taskId],
-                    status: droppedAt
-                })
-                    .then(() => console.log("updated"))
-                    .then(() => {
-                        this.setState(this.state);
-                    })
-            }
-            );
+        console.log(this.state);
+        const { taskMoved } = this.props;
+        var indexOfMovedTask=this.state.taskId.indexOf(Number(taskId));
+        taskMoved(Number(taskId), droppedAt, this.state.taskTitles[indexOfMovedTask], this.state.taskDetails[indexOfMovedTask]);
+
     }
 }
 
-export default TaskContainers;
+//redux
+// const mapStateToProps = (state) => { return {taskDetails:state.taskDetails,taskIds:state.taskId,taskStatus:state.taskStatus,taskTitles:state.taskTitles} };
+const mapStateToProps = (state) => { return state };
+
+const mapDispatchToProps = {
+    addTask, taskMoved
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskContainers);
+
+// export default TaskContainers;
