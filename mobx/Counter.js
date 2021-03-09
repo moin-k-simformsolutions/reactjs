@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import storeInstance from './countStore.js';
 import {useObserver} from "mobx-react";
-
+import Yuhi from "./Yuhi.js";
 const Count=()=>{
     // console.log(storeInstance);
     const [no,setNo]=useState(1);
@@ -20,9 +20,11 @@ const Count=()=>{
                 <button onClick={()=>{storeInstance.increseCount(no)}}>increse</button>
                 <button onClick={()=>{storeInstance.decreseCount(no)}}>decrese</button>
                 <button onClick={()=>{storeInstance.reset()}}>reset</button>
+                <Yuhi/>
             </div>
         )
     )
 }
 
 export default Count;
+

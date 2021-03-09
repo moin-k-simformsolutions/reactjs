@@ -3,14 +3,14 @@ import {observable,action, makeObservable} from "mobx";
 class CountStore{
     totalCount=0;
 
-    constructor(totalCount=0){
+    constructor(totalCount){
         makeObservable(this,{
             totalCount:observable,
             increseCount:action,
             decreseCount:action,
             reset:action
         });
-        this.totalCount=totalCount;
+        // this.totalCount=totalCount;
     }
 
 
